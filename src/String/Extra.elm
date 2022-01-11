@@ -715,20 +715,15 @@ leftOf pattern string =
 
 firstResult : List (Maybe String) -> String
 firstResult list =
-    firstResultHelp "" list
-
-
-firstResultHelp : String -> List (Maybe String) -> String
-firstResultHelp default list =
     case list of
         [] ->
-            default
+            ""
 
         (Just a) :: _ ->
             a
 
         Nothing :: rest ->
-            firstResultHelp default rest
+            firstResult rest
 
 
 {-| Search a string from right to left for a pattern and return a substring
