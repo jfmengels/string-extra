@@ -600,7 +600,7 @@ toSentence : List String -> String
 toSentence list =
     case list of
         x :: y :: z :: more ->
-            toSentenceHelper " and " (x ++ ", " ++ y) (z :: more)
+            (x ++ ", " ++ y) ++ toSentenceHelper " and " (z :: more)
 
         _ ->
             toSentenceBaseCase list
@@ -621,7 +621,7 @@ toSentenceOxford : List String -> String
 toSentenceOxford list =
     case list of
         x :: y :: z :: more ->
-            toSentenceHelper ", and " (x ++ ", " ++ y) (z :: more)
+            x ++ ", " ++ y ++ toSentenceHelper ", and " (z :: more)
 
         _ ->
             toSentenceBaseCase list
@@ -640,17 +640,17 @@ toSentenceBaseCase list =
             ""
 
 
-toSentenceHelper : String -> String -> List String -> String
-toSentenceHelper lastPart sentence list =
+toSentenceHelper : String -> List String -> String
+toSentenceHelper lastPart list =
     case list of
         [] ->
-            sentence
+            ""
 
         x :: [] ->
-            sentence ++ lastPart ++ x
+            lastPart ++ x
 
         x :: xs ->
-            toSentenceHelper lastPart (sentence ++ ", " ++ x) xs
+            ", " ++ x ++ toSentenceHelper lastPart xs
 
 
 {-| Remove all HTML tags from the string, preserving the text inside them.
