@@ -168,19 +168,17 @@ break width string =
         [ string ]
 
     else
-        breaker width string []
+        breaker width string
 
 
-breaker : Int -> String -> List String -> List String
-breaker width string acc =
+breaker : Int -> String -> List String
+breaker width string =
     case string of
         "" ->
-            List.reverse acc
+            []
 
         _ ->
-            breaker width
-                (String.dropLeft width string)
-                (String.slice 0 width string :: acc)
+            String.slice 0 width string :: breaker width (String.dropLeft width string)
 
 
 {-| Break a string into a list of strings of a specified maximum length,
